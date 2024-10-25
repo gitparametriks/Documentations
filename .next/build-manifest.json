@@ -15,25 +15,15 @@
   ],
   "rootMainFiles": [],
   "pages": {
-    "/": [
-      "static/chunks/webpack.js",
-      "static/chunks/main.js",
-      "static/chunks/pages/index.js"
-    ],
     "/IoT-Dashboard-Frontend/about-project": [
       "static/chunks/webpack.js",
       "static/chunks/main.js",
       "static/chunks/pages/IoT-Dashboard-Frontend/about-project.js"
     ],
-    "/IoT-Dashboard-Frontend/database-relational-diagram": [
+    "/NOC-Intern/what-to-know": [
       "static/chunks/webpack.js",
       "static/chunks/main.js",
-      "static/chunks/pages/IoT-Dashboard-Frontend/database-relational-diagram.js"
-    ],
-    "/IoT-Dashboard-Frontend/getting-started": [
-      "static/chunks/webpack.js",
-      "static/chunks/main.js",
-      "static/chunks/pages/IoT-Dashboard-Frontend/getting-started.js"
+      "static/chunks/pages/NOC-Intern/what-to-know.js"
     ],
     "/_app": [
       "static/chunks/webpack.js",

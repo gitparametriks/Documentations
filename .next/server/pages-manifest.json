@@ -1,9 +1,7 @@
 {
   "/_app": "pages/_app.js",
-  "/_document": "pages/_document.js",
   "/_error": "pages/_error.js",
-  "/": "pages/index.js",
-  "/IoT-Dashboard-Frontend/getting-started": "pages/IoT-Dashboard-Frontend/getting-started.js",
+  "/_document": "pages/_document.js",
   "/IoT-Dashboard-Frontend/about-project": "pages/IoT-Dashboard-Frontend/about-project.js",
-  "/IoT-Dashboard-Frontend/database-relational-diagram": "pages/IoT-Dashboard-Frontend/database-relational-diagram.js"
+  "/NOC-Intern/what-to-know": "pages/NOC-Intern/what-to-know.js"
 }
