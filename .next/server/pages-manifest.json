@@ -2,5 +2,7 @@
   "/_app": "pages/_app.js",
   "/_error": "pages/_error.js",
   "/_document": "pages/_document.js",
-  "/": "pages/index.js"
+  "/IoT-Dashboard-Frontend/database-relational-diagram": "pages/IoT-Dashboard-Frontend/database-relational-diagram.js",
+  "/IoT-Dashboard-Frontend/getting-started": "pages/IoT-Dashboard-Frontend/getting-started.js",
+  "/IoT-Dashboard-Frontend/about-project": "pages/IoT-Dashboard-Frontend/about-project.js"
 }
