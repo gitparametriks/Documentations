@@ -1,0 +1,7 @@
+{
+  "/_app": "pages/_app.js",
+  "/_error": "pages/_error.js",
+  "/_document": "pages/_document.js",
+  "/IoT-Dashboard-Frontend/about-project": "pages/IoT-Dashboard-Frontend/about-project.js",
+  "/NOC-Intern/what-to-know": "pages/NOC-Intern/what-to-know.js"
+}
