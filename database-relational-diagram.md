@@ -1,14 +1,94 @@
----
-title: Database Relational Diagram
----
-
 # Database Relational Diagram
 
 This document details the structure and relationships of the entities within the **Facility Management Database**.
 
-## Database Relational Diagram
+## Relationships Overview
 
-![Database Relational Diagram](/er-diagram.png)
+```mermaid
+erDiagram
+    FACILITIES {
+        int Facility_ID PK
+        string Facility_Name
+        string Location
+        string Status
+        string Manager_Name
+        string Digital_Twin_Status
+        string Digital_Twin_Link
+        string Risk_Level
+    }
+
+    SENSORS {
+        int Sensor_ID PK
+        int Facility_ID FK
+        date Deployment_Date
+        float Expense
+        string Status
+        float Sensor_Value
+        string Sensor_Type
+        string Sensor_Unit
+    }
+
+    RISKS {
+        int Risk_ID PK
+        int Facility_ID FK
+        string Severity
+        string Risk_Type
+        date Date_of_Discovery
+        string Mitigation_Status
+    }
+
+    CLAIMS {
+        int Claim_ID PK
+        float Actual_Claim_Amount
+        float Predicted_Claim_Amount
+    }
+
+    INCIDENTS {
+        int Incident_ID PK
+        int Facility_ID FK
+        string Incident_Type
+        string Severity
+        date Date
+    }
+
+    SAFETY_CHECKS {
+        int Check_ID PK
+        int Facility_ID FK
+        string Inspector_Name
+        string Inspection_Type
+        string Status
+        date Date_Of_Check
+    }
+
+    MAINTENANCE_TASKS {
+        int Task_ID PK
+        int Facility_ID FK
+        int Risk_ID FK
+        int Incident_ID FK
+        string Task_Type
+        string Incident
+        string Severity
+        string Status
+        date Date
+    }
+
+    FACILITIES ||--o{ SENSORS : "has"
+    FACILITIES ||--o{ RISKS : "has"
+    FACILITIES ||--o{ INCIDENTS : "has"
+    FACILITIES ||--o{ MAINTENANCE_TASKS : "has"
+    FACILITIES ||--o{ SAFETY_CHECKS : "has"
+
+    SAFETY_CHECKS ||--o{  RISKS: "can generate"
+
+    MAINTENANCE_TASKS ||--o{ RISKS : "can mitigate / reduce"
+
+    RISKS ||--o| CLAIMS : "generates predicted"
+    RISKS ||--o{ MAINTENANCE_TASKS : "can generate (preventive / mitigative)"
+    RISKS ||--o{ INCIDENTS : "can result in"
+
+    INCIDENTS ||--o| CLAIMS : "can generate"
+    INCIDENTS ||--o{ MAINTENANCE_TASKS : "can generate (reactive)"
+```
 
 ## Entities Summary
 
@@ -136,91 +216,3 @@ This document details the structure and relationships of the entities within the
 - **sensor_id** (FK): Related sensor.
 - **savings_amount**: Amount saved.
 - **savings_date**: Date recorded.
-
-## Relationships Overview
-
-```mermaid
-erDiagram
-    FACILITIES {
-        int Facility_ID PK
-        string Facility_Name
-        string Location
-        string Status
-        string Manager_Name
-        string Digital_Twin_Status
-        string Digital_Twin_Link
-        string Risk_Level
-    }
-
-    SENSORS {
-        int Sensor_ID PK
-        int Facility_ID FK
-        date Deployment_Date
-        float Expense
-        string Status
-        float Sensor_Value
-        string Sensor_Type
-        string Sensor_Unit
-    }
-
-    RISKS {
-        int Risk_ID PK
-        int Facility_ID FK
-        string Severity
-        string Risk_Type
-        date Date_of_Discovery
-        string Mitigation_Status
-    }
-
-    CLAIMS {
-        int Claim_ID PK
-        float Actual_Claim_Amount
-        float Predicted_Claim_Amount
-    }
-
-    INCIDENTS {
-        int Incident_ID PK
-        int Facility_ID FK
-        string Incident_Type
-        string Severity
-        date Date
-    }
-
-    SAFETY_CHECKS {
-        int Check_ID PK
-        int Facility_ID FK
-        string Inspector_Name
-        string Inspection_Type
-        string Status
-        date Date_Of_Check
-    }
-
-    MAINTENANCE_TASKS {
-        int Task_ID PK
-        int Facility_ID FK
-        int Risk_ID FK
-        int Incident_ID FK
-        string Task_Type
-        string Incident
-        string Severity
-        string Status
-        date Date
-    }
-
-    FACILITIES ||--o{ SENSORS : "has"
-    FACILITIES ||--o{ RISKS : "has"
-    FACILITIES ||--o{ INCIDENTS : "has"
-    FACILITIES ||--o{ MAINTENANCE_TASKS : "has"
-    FACILITIES ||--o{ SAFETY_CHECKS : "has"
-
-    SAFETY_CHECKS ||--o{  RISKS: "can generate"
-
-    MAINTENANCE_TASKS ||--o{ RISKS : "can mitigate / reduce"
-
-    RISKS ||--o| CLAIMS : "generates predicted"
-    RISKS ||--o{ MAINTENANCE_TASKS : "can generate (preventive / mitigative)"
-    RISKS ||--o{ INCIDENTS : "can result in"
-
-    INCIDENTS ||--o| CLAIMS : "can generate"
-    INCIDENTS ||--o{ MAINTENANCE_TASKS : "can generate (reactive)"
-```

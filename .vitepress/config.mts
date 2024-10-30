@@ -1,43 +1,69 @@
-import { defineConfig } from 'vitepress'
+import { withMermaid } from "vitepress-plugin-mermaid";
 
-// https://vitepress.dev/reference/site-config
-export default defineConfig({
-  lang: 'en-US',
-  title: "Documentations",
-  description: "PARAMETRIKS Documentations Site",
+export default withMermaid({
+  lang: "en-US",
+  title: "PARMAETRIKS",
+  description: "Official documentation site for PARAMETRIKS",
   themeConfig: {
-    // https://vitepress.dev/reference/default-theme-config
-    logo: '/parametriks.png',
-    nav: [
-      { text: 'Home', link: '/' },
-    ],
+    mermaidPlugin: {
+      class: "mermaid my-class",
+    },
+    logo: "/parametriks.png",
+    nav: [{ text: "Home", link: "/" }],
     sidebar: [
-      { text: 'Introduction', link: '/' },
+      { text: "Introduction and Overview", link: "/introduction_overview.md" },
       {
-        text: 'IoT-Dashboard-Frontend',
-        items: [
-          { text: 'About Project', link: '/IoT-Dashboard-Frontend/about-project.md' },
-          { text: 'Getting Started', link: '/IoT-Dashboard-Frontend/getting-started.md' },
-        ]
+        text: "Business and Market Strategy",
+        link: "/business_market_strategy.md",
       },
       {
-        text: 'IoT-Dashboard-Backend',
-        items: [
-          { text: 'Database Relational Diagram', link: '/IoT-Dashboard-Backend/database-relational-diagram.md' },
-          { text: 'Machine Learning-Assisted Data Transformation for Insurance Platform', link: '/IoT-Dashboard-Backend/machine-learning-assisted-data-transformation-for-insurance-platform.md' }
-        ]
+        text: "Investor Information",
+        link: "/investor_information.md",
       },
       {
-        text: 'NOC-Intern',
+        text: "Technology",
         items: [
-          { text: 'About Me', link: '/NOC-Intern/about-me.md' },
-          { text: 'What to Know', link: '/NOC-Intern/what-to-know.md' },
-        ]
+          { text: "Technology Overview", link: "/technology_overview.md" },
+          {
+            text: "Frontend",
+            link: "/frontend.md",
+          },
+          {
+            text: "Backend",
+            link: "/backend.md",
+          },
+          {
+            text: "Database Relational Diagram",
+            link: "/database-relational-diagram.md",
+          },
+        ],
+      },
+      {
+        text: "Project Management and Collaboration",
+        link: "/project_management_collaboration.md",
+      },
+      {
+        text: "Onboarding for New Employees",
+        link: "/employee_onboarding.md",
+      },
+      {
+        text: "Use Cases and Scenarios",
+        link: "/use_cases_scenarios.md",
+      },
+      {
+        text: "About Javian",
+        link: "/about-me.md",
       },
     ],
     socialLinks: [
-      { icon: 'github', link: 'https://github.com/orgs/gitparametriks/dashboard' },
-      { icon: 'linkedin', link: 'https://www.linkedin.com/company/parametriks-insurance/' }
-    ]
-  }
-})
+      {
+        icon: "github",
+        link: "https://github.com/orgs/gitparametriks/dashboard",
+      },
+      {
+        icon: "linkedin",
+        link: "https://www.linkedin.com/company/parametriks-insurance/",
+      },
+    ],
+  },
+});
