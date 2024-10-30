@@ -1,4 +1,2 @@
-.vitepress/cache
-.vitepress/dist/*
-!.vitepress/dist/.gitkeep
+.vercel
 node_modules

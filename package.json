@@ -1,12 +1,16 @@
 {
-  "scripts": {
-    "docs:dev": "vitepress dev",
-    "docs:build": "vitepress build",
-    "docs:preview": "vitepress preview"
-  },
+  "name": "vitepress-template",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
   "devDependencies": {
     "mermaid": "^11.4.0",
-    "vitepress": "^1.4.2",
+    "vitepress": "1.1.3",
     "vitepress-plugin-mermaid": "^2.0.17"
+  },
+  "scripts": {
+    "dev": "vitepress dev docs",
+    "build": "vitepress build docs",
+    "serve": "vitepress serve docs"
   }
 }
