@@ -1,4 +1,4 @@
-# Introduction and Overview
+# Introduction
 
 ## About PARAMETRIKS
 

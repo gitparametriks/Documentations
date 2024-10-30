@@ -11,7 +11,8 @@ export default withMermaid({
     logo: "/parametriks.png",
     nav: [{ text: "Home", link: "/" }],
     sidebar: [
-      { text: "Introduction and Overview", link: "/introduction_overview.md" },
+      { text: "Home", link: "/" },
+      { text: "Introduction ", link: "/introduction_overview.md" },
       {
         text: "Business and Market Strategy",
         link: "/business_market_strategy.md",
