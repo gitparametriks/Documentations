@@ -62,7 +62,18 @@ Clients or insurers may provide insurance data in various formats, primarily in 
 
 ### Transformation Flow Diagram
 
-![Transformation Flow Diagram](/transformation-flow-diagram.png)
+```mermaid
+flowchart TD
+    A[Client Data Ingestion] --> B[LLM Data Interpretation]
+    B --> C[Entity Mapping]
+    C --> D[Algorithm Selection with LLM]
+    D --> E[Data Cleaning & Transformation]
+    E --> F[Standardization & Normalization]
+    F --> G[Entity Relationship Mapping]
+    G --> H[Database Insertion]
+    H --> I[Error Handling and Feedback]
+    I --> B
+```
 
 ### Benefits of Machine Learning Integration
 
