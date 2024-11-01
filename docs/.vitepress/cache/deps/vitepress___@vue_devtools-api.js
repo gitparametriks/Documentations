@@ -2721,9 +2721,12 @@ var callInspectorUpdatedHook = debounce(() => {
   devtoolsContext.hooks.callHook("sendInspectorToClient", getActiveInspectors());
 });
 function addInspector(inspector, descriptor) {
+  var _a25, _b25;
   devtoolsInspector.push({
     options: inspector,
     descriptor,
+    treeFilterPlaceholder: (_a25 = inspector.treeFilterPlaceholder) != null ? _a25 : "Search tree...",
+    stateFilterPlaceholder: (_b25 = inspector.stateFilterPlaceholder) != null ? _b25 : "Search state...",
     treeFilter: "",
     selectedNodeId: "",
     appRecord: getAppRecord(descriptor.app)
