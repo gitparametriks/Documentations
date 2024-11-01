@@ -1,6 +1,6 @@
 # Technology Overview
 
-The **IoT Dashboard Frontend** is a sophisticated web application designed to manage and visualize IoT data for real-time monitoring and decision-making. Built with a modern tech stack, this dashboard leverages Next.js for optimized performance, React for a dynamic user interface, AWS for backend support, and TailwindCSS for styling. This document provides an overview of the core technologies, architectural choices, and development tools used.
+The **IoT Dashboard Frontend** is a sophisticated web application designed to manage and visualize IoT data for real-time monitoring and decision-making. Built with a modern tech stack, this dashboard leverages Next.js for optimized performance, React for a dynamic user interface, AWS for backend support, TailwindCSS for styling, and shadcn/ui for modular, customizable UI components. This document provides an overview of the core technologies, architectural choices, and development tools used.
 
 ## Core Technology Stack
 
@@ -11,6 +11,7 @@ The **IoT Dashboard Frontend** is a sophisticated web application designed to ma
 | **TailwindCSS** | Utility-first CSS framework for responsive design and fast UI styling.                                      |
 | **AWS SDK**     | Facilitates integration with AWS services, specifically AWS Cognito for authentication and user management. |
 | **Recharts**    | Charting library for dynamic and interactive data visualization.                                            |
+| **shadcn/ui**   | Component library built on Radix UI and TailwindCSS, offering customizable and accessible UI elements.      |
 
 ## Architecture and Key Components
 
@@ -46,6 +47,15 @@ TailwindCSS is the primary styling framework, chosen for its utility-first appro
 - **Responsive Design**: Built-in responsive breakpoints enable fluid design across devices without additional configuration.
 - **Customization**: Tailwind can be extended using `tailwind.config.ts`, which centralizes design customizations like color schemes, spacing, and typography.
 
+### shadcn/ui for Customizable UI Components
+
+[shadcn/ui](https://ui.shadcn.dev/) is a UI component library built on top of **Radix UI** and **TailwindCSS**. It offers a set of pre-built, accessible components that can be customized to fit the application’s unique requirements. Using shadcn/ui enhances the consistency, usability, and accessibility of the UI.
+
+- **Component Flexibility**: shadcn/ui components are highly customizable due to their integration with TailwindCSS, allowing for seamless style adjustments to fit brand guidelines.
+- **Accessible Design**: Built with accessibility in mind, shadcn/ui ensures that components meet WCAG standards, providing a better user experience for users with disabilities.
+- **Radix UI Foundation**: shadcn/ui components are built on Radix UI primitives, ensuring high-quality interactions and consistent behavior across different browsers and devices.
+- **Component Examples**: Common components used from shadcn/ui include buttons, modals, dialogs, and navigation elements, which are integrated throughout the dashboard to maintain a cohesive design and consistent behavior.
+
 ### Recharts for Data Visualization
 
 Recharts is used to provide interactive, customizable charts and graphs, which are essential for visualizing IoT metrics and analytics. The charts are designed to be responsive, ensuring an optimal user experience across devices. Some of the key data visualizations include:
@@ -59,15 +69,11 @@ Recharts is used to provide interactive, customizable charts and graphs, which a
 
 The project uses a standardized GitHub workflow, ensuring version control and collaboration. Contributors follow these conventions:
 
-- **Commit Messages**: Commit messages use [Conventional Commits](https://www.conventionalcommits.org/en/v1.0.0/) format to maintain a readable and structured history. For example:
-
-  ```git
-  feat: add user authentication flow
-  fix: resolve UI bug on dashboard
-  ```
-
-- **Pull Requests**: PR titles follow the same format as commit messages. PRs are kept small and focused on specific tasks, which enhances readability and maintainability.
+- **Commit Messages**: Commit messages use [Conventional Commits](https://www.conventionalcommits.org/en/v1.0.0/) format to maintain a readable and structured history.
+- **Pull Requests**: PR titles follow the same format as commit messages, and PRs are kept small and focused on specific tasks, enhancing readability and maintainability.
 - **Branching Strategy**: Feature branches are created for new functionalities, with the main branch reserved for stable, production-ready code.
+
+For detailed Git and PR conventions, refer to the [Coding Conventions](./coding_conventions.md) page.
 
 ### TypeScript
 
@@ -94,7 +100,3 @@ Parametriks plans to implement additional technologies and improvements to enhan
 - **Unit and Integration Testing**: Adding automated tests to improve reliability and coverage.
 - **Internationalization (i18n)**: To support multiple languages, improving accessibility for a global user base.
 - **AI-Based Data Analysis**: Leveraging AI for predictive analytics and enhanced data insights based on IoT sensor data.
-
-## Summary
-
-The **IoT Dashboard Frontend** by Parametriks is a robust, scalable application built with a modern tech stack tailored to IoT data visualization and management. Combining Next.js for server-side capabilities, React for UI, AWS for backend services, and TailwindCSS for responsive design, this platform supports Parametriks' vision of empowering clients and insurers through real-time insights. Recharts and TypeScript enhance data visualization and code reliability, ensuring a high-quality user experience.

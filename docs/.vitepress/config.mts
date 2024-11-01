@@ -22,6 +22,10 @@ export default withMermaid({
         link: "/investor_information.md",
       },
       {
+        text: "Use Cases and Scenarios",
+        link: "/use_cases_scenarios.md",
+      },
+      {
         text: "Technology",
         items: [
           { text: "Technology Overview", link: "/technology_overview.md" },
@@ -34,8 +38,12 @@ export default withMermaid({
             link: "/backend.md",
           },
           {
-            text: "Database Relational Diagram",
-            link: "/database-relational-diagram.md",
+            text: "Database Schema",
+            link: "/database_schema.md",
+          },
+          {
+            text: "Coding Conventions",
+            link: "/coding_conventions.md",
           },
         ],
       },
@@ -48,12 +56,8 @@ export default withMermaid({
         link: "/employee_onboarding.md",
       },
       {
-        text: "Use Cases and Scenarios",
-        link: "/use_cases_scenarios.md",
-      },
-      {
-        text: "About Javian",
-        link: "/about-me.md",
+        text: "Onboarding for NOC Interns",
+        link: "/noc_onboarding.md",
       },
     ],
     socialLinks: [

@@ -164,7 +164,3 @@ flowchart TD
 - **Client Response**: Security teams receive immediate alerts and can respond proactively, minimizing the likelihood of asset damage or theft.
 - **Outcome**: High-value assets are protected, and operational costs related to asset loss are minimized.
 - **Insurance Benefit**: Reduced claim payouts related to theft or vandalism, contributing to better risk profiling and client satisfaction.
-
-## Summary
-
-Parametriks provides a scalable and effective solution for risk management, integrating IoT and machine learning to predict and prevent risks across various industries. Our platform enables clients to take proactive measures, significantly reducing claims, enhancing safety, and optimizing premium pricing. By transforming insurance processes from reactive to proactive, Parametriks helps insurers build stronger, data-driven relationships with clients and reduce overall insurance costs.

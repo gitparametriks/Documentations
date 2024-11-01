@@ -160,7 +160,3 @@ For more detailed examples and documentation, refer to the [Parametriks Document
 ## Additional Information
 
 For more detailed information about the project, including contributions, licensing, and acknowledgments, refer to the main [README.md](./README.md) file. You can find links to resources such as the Next.js documentation, Radix UI, AWS Cognito, and more.
-
-## Summary
-
-The **IoT Dashboard Frontend** is an extensible, feature-rich platform built on modern technologies. The well-organized structure and comprehensive use of components, custom hooks, and reusable UI elements make this dashboard highly maintainable and scalable for future enhancements. The combination of AWS integration, React, Next.js, and TailwindCSS provides an optimal environment for building responsive and user-friendly interfaces tailored to IoT applications in the insurance domain.
