@@ -159,4 +159,4 @@ For more detailed examples and documentation, refer to the [Parametriks Document
 
 ## Additional Information
 
-For more detailed information about the project, including contributions, licensing, and acknowledgments, refer to the main [README.md](./README.md) file. You can find links to resources such as the Next.js documentation, Radix UI, AWS Cognito, and more.
+For more detailed information about the project, including contributions, licensing, and acknowledgments, refer to the main README.md file. You can find links to resources such as the Next.js documentation, Radix UI, AWS Cognito, and more.
