@@ -45,6 +45,10 @@ export default withMermaid({
             text: "Coding Conventions",
             link: "/coding_conventions.md",
           },
+          {
+            text: "AWS Resource Naming Conventions",
+            link: "/aws_resource_naming_conventions.md",
+          },
         ],
       },
       {
