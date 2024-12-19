@@ -149,130 +149,132 @@ As the platform evolves, integrating additional data sources could enrich analyt
 
 ```mermaid
 erDiagram
-    FACILITIES {
-        int facility_id PK
+    Facility {
+        number facility_id PK
         string facility_name
         string location
-        enum status
+        string status
         string manager_name
         boolean digital_twin_status
         string digital_twin_link
-        enum risk_level
-        int facility_size
+        string risk_level
+        number facility_size
         string facility_type
         string facility_description
-        int number_of_employees
-        int last_maintenance_date
+        number number_of_employees
+        number last_maintenance_date
     }
 
-    SENSORS {
-        int sensor_id PK
-        int facility_id FK
-        int deployment_date
-        double expense
+    SensorsData {
+        number sensor_id PK
+        number facility_id FK
+        date deployment_date
+        number expense
         boolean status
         string sensor_type
         string sensor_unit
         string sensor_location
         string sensor_description
-        int expected_lifespan
-        int calibration_date
+        number expected_lifespan
+        date calibration_date
     }
 
-    SENSOR {
-        double value
-        int ts
-        int sensor_id FK
+    SensorData {
+        number sensor_id FK
+        number value
+        number ts
         string sensor_type
         boolean anomaly_flag
     }
 
-    RISK {
-        int risk_id PK
-        int facility_id FK
-        int check_id FK
-        enum severity
+    RiskData {
+        number risk_id PK
+        number facility_id FK
+        number check_id FK
+        string severity
         string risk_type
-        int date_of_discovery
-        enum mitigation_status
-        double estimated_cost_impact
-        int[] related_sensors
+        date date_of_discovery
+        string mitigation_status
+        number estimated_cost_impact
+        number[] related_sensors FK
         string risk_description
     }
 
-    RISK_TYPE {
+    RiskType {
         string risk_type PK
         string description
     }
 
-    CLAIM {
-        int claim_id PK
-        int facility_id FK
-        int incident_id FK
-        int risk_id FK
-        double actual_claim_amount
-        double predicted_claim_amount
-        int date
+    ClaimData {
+        number claim_id PK
+        number facility_id FK
+        number incident_id FK
+        number risk_id FK
+        number actual_claim_amount
+        number predicted_claim_amount
+        date date
         string claim_category
     }
 
-    INCIDENT {
-        int incident_id PK
-        int facility_id FK
-        int sensor_id FK
-        int check_id FK
+    IncidentData {
+        number incident_id PK
+        number facility_id FK
+        number sensor_id FK
+        number check_id FK
         string incident_type
-        enum severity
-        int date
+        string severity
+        date date
         string detection_method
         string impact_area
     }
 
-    SAFETY_CHECK {
-        int check_id PK
-        int facility_id FK
+    SafetyCheckData {
+        number check_id PK
+        number facility_id FK
         string inspector_name
         string inspection_type
-        enum status
-        int date_of_check
-        int non_conformance_count
+        string status
+        date date_of_check
+        number non_conformance_count
         boolean follow_up_required
     }
 
-    MAINTENANCE_TASK {
-        int task_id PK
-        int facility_id FK
-        int risk_id FK
-        int incident_id FK
-        int check_id FK
+    MaintenanceTaskData {
+        number task_id PK
+        number facility_id FK
+        number risk_id FK
+        number incident_id FK
+        number check_id FK
         string task_type
         string incident
-        enum severity
-        enum status
-        int date
-        double cost_estimation
+        string severity
+        string status
+        date date
+        number cost_estimation
     }
 
-    FACILITIES ||--o{ SENSORS : has
-    FACILITIES ||--o{ RISK : has
-    FACILITIES ||--o{ CLAIM : has
-    FACILITIES ||--o{ INCIDENT : "can have unexpected"
-    FACILITIES ||--o{ SAFETY_CHECK : has
-    FACILITIES ||--o{ MAINTENANCE_TASK : has
+    Facility ||--o{ SensorsData : has
+    Facility ||--o{ RiskData : has
+    Facility ||--o{ ClaimData : has
+    Facility ||--o{ IncidentData : "can have unexpected"
+    Facility ||--o{ SafetyCheckData : has
+    Facility ||--o{ MaintenanceTaskData : has
 
-    SENSORS ||--o{ SENSOR : "records data in"
-    SENSOR ||--o{ RISK : "data can predict risks"
+    SensorsData ||--o{ SensorData : "records data in"
+    SensorData ||--o{ RiskData : "data can predict risks"
 
-    RISK ||--o{ CLAIM : "generates predicted"
-    RISK ||--o{ INCIDENT : "can lead to"
-    RISK ||--o{ MAINTENANCE_TASK : "can generate (preventive / mitigative)"
+    RiskData ||--o{ ClaimData : "generates predicted"
+    RiskData ||--o{ IncidentData : "can lead to"
+    RiskData ||--|| RiskType : categorizes
+    RiskData ||--o{ MaintenanceTaskData : "can generate (preventive / mitigative)"
 
-    INCIDENT ||--o{ CLAIM : "can generate"
-    INCIDENT ||--o{ MAINTENANCE_TASK : "can generate (reactive)"
+    IncidentData ||--o{ ClaimData : "can generate"
+    IncidentData ||--o{ MaintenanceTaskData : "can generate (reactive)"
 
-    SAFETY_CHECK ||--o{ RISK : "discovers"
+    SafetyCheckData ||--o{ RiskData : "discovers"
 
-    MAINTENANCE_TASK ||--o{ RISK : "can mitigate / reduce"
+    MaintenanceTaskData ||--o{ RiskData : "can mitigate / reduce"
+
 ```
 
 # NOT UPDATED YET
