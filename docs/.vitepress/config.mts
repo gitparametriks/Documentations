@@ -49,6 +49,14 @@ export default withMermaid({
             text: "AWS Resource Naming Conventions",
             link: "/aws_resource_naming_conventions.md",
           },
+          {
+            text: "ParametriksCDK",
+            link: "/parametrikscdk.md",
+          },
+          {
+            text: "ParametriksCDK Extra",
+            link: "/parametrikscdk_extra.md",
+          },
         ],
       },
       {

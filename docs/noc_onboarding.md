@@ -107,7 +107,7 @@ Throughout your internship, we encourage you to:
 - **HR Representative**: For onboarding issues, scheduling, or administrative questions.
 - **Mentor**: Assigned to guide you through technical challenges and help with your professional growth.
 
-## Welcome to the Team!
+## Welcome to the Team
 
 We’re thrilled to have you onboard as part of our NOC program. This document is just a starting point – as you dive into projects, you’ll gain further insights into our platform. Don’t hesitate to reach out to anyone on the team if you have questions or need guidance. We’re here to ensure you have a rewarding and productive internship experience!
 
