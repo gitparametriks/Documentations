@@ -12924,9 +12924,7 @@ styfn$8.checkBoundsTrigger = function(ele, name, fromValue, toValue) {
       prop.triggersBoundsOfParallelBeziers && name === "curve-style" && (fromValue === "bezier" || toValue === "bezier")
     ) {
       ele.parallelEdges().forEach(function(pllEdge) {
-        if (pllEdge.isBundledBezier()) {
-          pllEdge.dirtyBoundingBoxCache();
-        }
+        pllEdge.dirtyBoundingBoxCache();
       });
     }
     if (prop.triggersBoundsOfConnectedEdges && name === "display" && (fromValue === "none" || toValue === "none")) {
@@ -26760,7 +26758,7 @@ sheetfn.appendToStyle = function(style3) {
   }
   return style3;
 };
-var version = "3.30.3";
+var version = "3.30.4";
 var cytoscape = function cytoscape2(options2) {
   if (options2 === void 0) {
     options2 = {};

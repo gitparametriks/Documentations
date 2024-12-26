@@ -21,195 +21,336 @@ As the platform evolves, integrating additional data sources could enrich analyt
 5. **Energy Consumption Data**  
    Data on energy consumption could be linked with sensor data and facility operations, supporting analyses on energy savings, efficiency, and the impact of maintenance tasks on consumption.
 
+Below is the updated markdown reflecting the new schema with the **Company** and **User** entities, as well as the updated associations to `company_id` across all entities and the additional fields for **Claim Data**.
+
 ## Entity Descriptions
 
-### 1. **Facilities**
+### 1. **Company**
 
-> Represents facilities monitored by the system.
+> The **Company** entity represents an organization, which can be either a client or an insurer. Insurers may have a list of client companies they insure, and both types have associated staff (users).
 
-- **Facility_ID**: Unique identifier for each facility (Primary Key).
-- **Facility_Name**: Name of the facility.
-- **Location**: Geographic location or area of the facility.
-- **Status**: Operational status of the facility (closed, maintenance, operational).
-- **Manager_Name**: Name of the facility's manager.
-- **Digital_Twin_Status**: Indicates whether a digital twin exists (true, false).
-- **Digital_Twin_Link**: Link to the facility's digital twin (if applicable).
-- **Risk_Level**: Overall risk level of the facility (none, low, medium, high).
+- **company_id**: Unique identifier for the company (Primary Key).
+- **company_name**: Name of the company.
+- **type**: Company type, either `insurer` or `client`.
+- **clients**: An array of company IDs representing the clients if this company is an insurer. Optional field.
+- **company_description**: A brief description of the company.
+- **company_staff**: An array of user IDs representing the staff (users) associated with this company.
 
-### 2. **Sensors**
+### 2. **User**
 
-> Stores information about sensors deployed in facilities.
+> The **User** entity contains information about users who are associated with a company. Each user belongs to exactly one company.
 
-- **Sensor_ID**: Unique identifier for each sensor (Primary Key).
-- **Facility_ID**: Identifier linking the sensor to a facility (Foreign Key).
-- **Deployment_Date**: Date when the sensor was deployed.
-- **Expense**: Cost associated with the sensor.
-- **Status**: Current operational status of the sensor (true, false).
-- **Sensor_Value**: Most recent reading value from the sensor.
-- **Sensor_Type**: Type/category of the sensor.
-- **Sensor_Unit**: Measurement unit of the sensor (e.g., Celsius, Fahrenheit, ppm, Percentage).
+- **user_id**: Unique identifier for the user (Primary Key).
+- **email**: The user’s email address.
+- **company_id**: Identifier linking the user to a specific company (Foreign Key).
+- **first_name**: The user’s first name.
+- **last_name**: The user’s last name.
+- **middle_name**: The user’s middle name (optional).
+- **title**: A salutation or title, such as `Mr`, `Mrs`, `Dr`, or `Mdm`.
 
-### 3. **Risks**
+### 3. **Facilities**
 
-> Details risks identified within each facility.
+> The **Facilities** entity holds information about the various facilities managed, such as warehouses or distribution centers. Facilities belong to a **client** company.
 
-- **Risk_ID**: Unique identifier for each risk (Primary Key).
-- **Facility_ID**: Identifier linking the risk to a facility (Foreign Key).
-- **Severity**: Severity level of the risk (low, medium, high).
-- **Risk_Type**: Type or category of the risk (e.g., fire, plumbing, ac).
-- **Date_of_Discovery**: Date the risk was identified.
-- **Mitigation_Status**: Status of the risk mitigation (not mitigated, mitigating, mitigated, avoided).
+- **facility_id**: Unique identifier for each facility (Primary Key).
+- **facility_name**: The name of the facility.
+- **company_id**: Identifier linking the facility to the company that owns it (Foreign Key; must be a client company).
+- **location**: Geographical location of the facility.
+- **status**: Current operational status of the facility (`closed`, `maintenance`, `operational`).
+- **manager_name**: Name of the manager in charge of the facility.
+- **digital_twin_status**: Boolean indicating if a digital twin exists for the facility.
+- **digital_twin_link**: URL linking to the digital twin resource of the facility.
+- **risk_level**: Current risk level of the facility (`none`, `low`, `medium`, `high`).
+- **facility_size**: Size of the facility in square meters.
+- **facility_type**: Type of the facility (e.g., `Warehouse`).
+- **facility_description**: Description of the facility.
+- **number_of_employees**: Number of employees working at the facility.
+- **last_maintenance_date**: Unix timestamp of the last maintenance activity.
 
-### 4. **Claims**
+### 4. **Sensors Data**
 
-> Stores information about claims filed due to risks or incidents.
+> The **Sensors Data** entity stores information about sensors deployed at facilities. Each sensor is associated with a facility and a company.
 
-- **Claim_ID**: Unique identifier for each claim (Primary Key).
-- **Actual_Claim_Amount**: Actual claim amount filed.
-- **Predicted_Claim_Amount**: Predicted claim amount for forecasting.
-- **Date**: Date of the claim submission.
+- **sensor_id**: Unique identifier for each sensor (Primary Key).
+- **facility_id**: Identifier linking the sensor to a specific facility (Foreign Key).
+- **company_id**: Identifier linking the sensor to the same company as the facility (Foreign Key).
+- **deployment_date**: Unix timestamp or date of when the sensor was deployed.
+- **expense**: Cost incurred for the sensor in dollars.
+- **status**: Boolean indicating the operational status of the sensor.
+- **sensor_type**: Type of the sensor (e.g., `Temperature Sensor`).
+- **sensor_unit**: Unit in which the sensor measures (e.g., `Celsius`).
+- **sensor_location**: Specific location within the facility where the sensor is installed.
+- **sensor_description**: Additional information describing the purpose of the sensor.
+- **expected_lifespan**: Expected lifespan of the sensor in months.
+- **calibration_date**: Unix timestamp or date of the last calibration.
 
-### 5. **Incidents**
+### 5. **Sensor Data**
 
-> Records incidents that occur within facilities.
+> The **Sensor Data** entity contains time-series data collected from sensors.
 
-- **Incident_ID**: Unique identifier for each incident (Primary Key).
-- **Facility_ID**: Identifier linking the incident to a facility (Foreign Key).
-- **Incident_Type**: Type or category of the incident (e.g., fire, water leak).
-- **Severity**: Severity level of the incident (low, medium, high).
-- **Date**: Date the incident occurred.
+- **value**: Recorded value from the sensor.
+- **ts**: Unix timestamp when the data was recorded.
+- **sensor_id**: Unique identifier for the sensor that generated the data (Foreign Key).
+- **sensor_type**: Type of the sensor that provided the value.
+- **anomaly_flag**: Boolean indicating if the data value is anomalous.
 
-### 6. **Safety Checks**
+### 6. **Risk Data**
 
-> Tracks safety checks conducted within facilities.
+> The **Risk Data** entity captures identified risks in facilities, including severity and mitigation information.
 
-- **Check_ID**: Unique identifier for each safety check (Primary Key).
-- **Facility_ID**: Identifier linking the safety check to a facility (Foreign Key).
-- **Inspector_Name**: Name of the inspector conducting the check.
-- **Inspection_Type**: Type or category of the inspection.
-- **Status**: Status of the safety check (not done, in progress, completed, skipped).
-- **Date_Of_Check**: Date the safety check was performed.
+- **risk_id**: Unique identifier for each risk (Primary Key).
+- **facility_id**: Identifier linking the risk to a specific facility (Foreign Key).
+- **company_id**: Identifier linking the risk to the company that owns the facility (Foreign Key).
+- **check_id**: Identifier for a related safety check, if applicable.
+- **severity**: Severity level of the risk (`low`, `medium`, `high`).
+- **risk_type**: Type of risk identified (e.g., `Fire Hazard`).
+- **date_of_discovery**: Unix timestamp or date of when the risk was discovered.
+- **mitigation_status**: Status of mitigation (`not mitigated`, `mitigating`, `mitigated`, `avoided`).
+- **estimated_cost_impact**: Estimated financial impact of the risk in dollars.
+- **related_sensors**: Array of sensor IDs related to the risk.
+- **risk_description**: Description of the risk.
 
-### 7. **Maintenance Tasks**
+### 7. **Risk Type**
 
-> Logs maintenance tasks related to risks or incidents within facilities.
+> The **Risk Type** entity contains standardized risk types.
 
-- **Task_ID**: Unique identifier for each maintenance task (Primary Key).
-- **Facility_ID**: Identifier linking the task to a facility (Foreign Key).
-- **Risk_ID**: Identifier linking the task to a risk (Foreign Key).
-- **Incident_ID**: Identifier linking the task to an incident (Foreign Key).
-- **Task_Type**: Type or category of the task.
-- **Incident**: Incident linked to the task.
-- **Severity**: Severity level of the maintenance task (low, medium, high).
-- **Status**: Current status of the task (not done, in progress, completed, skipped).
-- **Date**: Date the task was scheduled or completed.
+- **risk_type**: Name of the risk type (Primary Key).
+- **description**: Description of the risk type.
+
+### 8. **Claim Data**
+
+> The **Claim Data** entity tracks claims made due to incidents or risks. Each claim involves a claimant (client company) and an insurer company.
+
+- **claim_id**: Unique identifier for each claim (Primary Key).
+- **facility_id**: Identifier linking the claim to a specific facility (Foreign Key).
+- **company_id**: Identifier linking the claim to the company that owns the facility (Foreign Key; typically the claimant’s company).
+- **claimant_company_id**: Identifier of the company making the claim (Foreign Key; must be a client company).
+- **insurer_company_id**: Identifier of the insurer company handling the claim (Foreign Key; must be an insurer company).
+- **incident_id**: Identifier linking the claim to a specific incident, if applicable.
+- **risk_id**: Identifier linking the claim to a specific risk, if applicable.
+- **actual_claim_amount**: Actual amount claimed in dollars.
+- **predicted_claim_amount**: Predicted claim amount in dollars.
+- **date**: Unix timestamp or date of the claim.
+- **claim_category**: Category of the claim (e.g., `Property Damage`).
+
+### 9. **Incident Data**
+
+> The **Incident Data** entity contains information about incidents that occurred at facilities.
+
+- **incident_id**: Unique identifier for each incident (Primary Key).
+- **facility_id**: Identifier linking the incident to a specific facility (Foreign Key).
+- **company_id**: Identifier linking the incident to the company that owns the facility (Foreign Key).
+- **sensor_id**: Identifier linking the incident to a sensor, if applicable.
+- **check_id**: Identifier linking the incident to a safety check, if applicable.
+- **incident_type**: Type of incident (e.g., `Equipment Failure`).
+- **severity**: Severity level of the incident (`low`, `medium`, `high`).
+- **date**: Unix timestamp or date when the incident occurred.
+- **detection_method**: How the incident was detected (e.g., `Sensor Alert`).
+- **impact_area**: Area within the facility impacted by the incident.
+
+### 10. **Safety Check Data**
+
+> The **Safety Check Data** entity records the results of safety inspections conducted at facilities.
+
+- **check_id**: Unique identifier for each safety check (Primary Key).
+- **facility_id**: Identifier linking the safety check to a specific facility (Foreign Key).
+- **company_id**: Identifier linking the safety check to the company that owns the facility (Foreign Key).
+- **inspector_name**: Name of the inspector who conducted the safety check.
+- **inspection_type**: Type of inspection conducted (e.g., `Fire Safety`).
+- **status**: Current status of the safety check (`not done`, `in progress`, `completed`, `skipped`).
+- **date_of_check**: Unix timestamp or date of when the safety check was conducted.
+- **non_conformance_count**: Number of non-conformances identified during the safety check.
+- **follow_up_required**: Boolean indicating if follow-up is required.
+
+### 11. **Maintenance Task Data**
+
+> The **Maintenance Task Data** entity tracks maintenance tasks conducted at facilities, including related incidents and severity.
+
+- **task_id**: Unique identifier for each maintenance task (Primary Key).
+- **facility_id**: Identifier linking the task to a specific facility (Foreign Key).
+- **company_id**: Identifier linking the maintenance task to the company that owns the facility (Foreign Key).
+- **risk_id**: Identifier linking the task to a specific risk, if applicable.
+- **incident_id**: Identifier linking the task to a specific incident, if applicable.
+- **check_id**: Identifier linking the task to a safety check, if applicable.
+- **task_type**: Type of maintenance task conducted (e.g., `Repair`, `Inspection`).
+- **incident**: Incident details associated with the maintenance task.
+- **severity**: Severity level of the maintenance task (`low`, `medium`, `high`).
+- **status**: Current status of the maintenance task (`not done`, `in progress`, `completed`, `skipped`).
+- **date**: Unix timestamp or date when the task was conducted.
+- **cost_estimation**: Estimated cost for the maintenance task in dollars.
 
 ## Database Relational Diagram
 
 ```mermaid
 erDiagram
-    FACILITIES {
-        int Facility_ID PK
-        string Facility_Name
-        string Location
-        string Status
-        string Manager_Name
-        string Digital_Twin_Status
-        string Digital_Twin_Link
-        string Risk_Level
+    Company {
+        number company_id PK
+        string company_name
+        string type
+        number[] clients
+        string company_description
+        number[] company_staff
     }
 
-    OTHER_DATA {
-        int Data_ID PK
-        int Facility_ID FK
-        string Data
+    User {
+        number user_id PK
+        string email
+        number company_id FK
+        string first_name
+        string last_name
+        string middle_name
+        string title
     }
 
-    SENSORS {
-        int Sensor_ID PK
-        int Facility_ID FK
-        date Deployment_Date
-        float Expense
-        string Status
-        float Sensor_Value
-        string Sensor_Type
-        string Sensor_Unit
+    Facility {
+        number facility_id PK
+        number company_id FK
+        string facility_name
+        string location
+        string status
+        string manager_name
+        boolean digital_twin_status
+        string digital_twin_link
+        string risk_level
+        number facility_size
+        string facility_type
+        string facility_description
+        number number_of_employees
+        number last_maintenance_date
     }
 
-    RISKS {
-        int Risk_ID PK
-        int Facility_ID FK
-        int Check_ID FK
-        string Severity
-        string Risk_Type
-        date Date_of_Discovery
-        string Mitigation_Status
+    SensorsData {
+        number sensor_id PK
+        number facility_id FK
+        number company_id FK
+        date deployment_date
+        number expense
+        boolean status
+        string sensor_type
+        string sensor_unit
+        string sensor_location
+        string sensor_description
+        number expected_lifespan
+        date calibration_date
     }
 
-    CLAIMS {
-        int Claim_ID PK
-        int Facility_ID FK
-        int Incident_ID FK
-        int Risk_ID FK
-        float Actual_Claim_Amount
-        float Predicted_Claim_Amount
-        date Date
+    SensorData {
+        number sensor_id FK
+        number value
+        number ts
+        string sensor_type
+        boolean anomaly_flag
     }
 
-    INCIDENTS {
-        int Incident_ID PK
-        int Facility_ID FK
-        int Sensor_ID FK
-        int Check_ID FK
-        string Incident_Type
-        string Severity
-        date Date
+    RiskData {
+        number risk_id PK
+        number facility_id FK
+        number company_id FK
+        number check_id FK
+        string severity
+        string risk_type
+        date date_of_discovery
+        string mitigation_status
+        number estimated_cost_impact
+        number[] related_sensors FK
+        string risk_description
     }
 
-    SAFETY_CHECKS {
-        int Check_ID PK
-        int Facility_ID FK
-        string Inspector_Name
-        string Inspection_Type
-        string Status
-        date Date_Of_Check
+    RiskType {
+        string risk_type PK
+        string description
     }
 
-    MAINTENANCE_TASKS {
-        int Task_ID PK
-        int Facility_ID FK
-        int Risk_ID FK
-        int Incident_ID FK
-        int Check_ID FK
-        string Task_Type
-        string Incident
-        string Severity
-        string Status
-        date Date
+    ClaimData {
+        number claim_id PK
+        number facility_id FK
+        number company_id FK
+        number claimant_company_id FK
+        number insurer_company_id FK
+        number incident_id FK
+        number risk_id FK
+        number actual_claim_amount
+        number predicted_claim_amount
+        date date
+        string claim_category
     }
 
-    FACILITIES ||--o{ SENSORS : "has"
-    FACILITIES ||--o{ RISKS : "has"
-    FACILITIES ||--o{ OTHER_DATA : "has"
-    FACILITIES ||--o{ INCIDENTS : "has"
-    FACILITIES ||--o{ MAINTENANCE_TASKS : "has"
-    FACILITIES ||--o{ SAFETY_CHECKS : "has"
+    IncidentData {
+        number incident_id PK
+        number facility_id FK
+        number company_id FK
+        number sensor_id FK
+        number check_id FK
+        string incident_type
+        string severity
+        date date
+        string detection_method
+        string impact_area
+    }
 
-    SAFETY_CHECKS ||--o{  RISKS: "can generate"
-    SAFETY_CHECKS ||--o{ INCIDENTS : "can result in"
+    SafetyCheckData {
+        number check_id PK
+        number facility_id FK
+        number company_id FK
+        string inspector_name
+        string inspection_type
+        string status
+        date date_of_check
+        number non_conformance_count
+        boolean follow_up_required
+    }
 
-    SENSORS ||--o{ INCIDENTS : "can trigger"
+    MaintenanceTaskData {
+        number task_id PK
+        number facility_id FK
+        number company_id FK
+        number risk_id FK
+        number incident_id FK
+        number check_id FK
+        string task_type
+        string incident
+        string severity
+        string status
+        date date
+        number cost_estimation
+    }
 
-    MAINTENANCE_TASKS ||--o{ RISKS : "can mitigate / reduce"
-    MAINTENANCE_TASKS ||--o{ SAFETY_CHECKS : "generated by"
+    Company ||--o{ User : "employs"
+    Company ||--o{ Facility : "owns"
+    Company ||--o{ SensorsData : "responsible for"
+    Company ||--o{ RiskData : "faces"
+    Company ||--o{ IncidentData : "experiences"
+    Company ||--o{ SafetyCheckData : "undergoes checks"
+    Company ||--o{ MaintenanceTaskData : "manages tasks"
+    Company ||--o{ ClaimData : "involved in claims (as claimant or insurer)"
 
-    RISKS ||--o| CLAIMS : "generates predicted"
-    RISKS ||--o{ MAINTENANCE_TASKS : "can generate (preventive / mitigative)"
-    RISKS ||--o{ INCIDENTS : "can result in"
+    Facility ||--o{ SensorsData : "has"
+    Facility ||--o{ RiskData : "has"
+    Facility ||--o{ ClaimData : "has"
+    Facility ||--o{ IncidentData : "can have unexpected"
+    Facility ||--o{ SafetyCheckData : "has"
+    Facility ||--o{ MaintenanceTaskData : "has"
 
-    INCIDENTS ||--o| CLAIMS : "can generate"
-    INCIDENTS ||--o{ MAINTENANCE_TASKS : "can generate (reactive)"
+    SensorsData ||--o{ SensorData : "records readings"
+
+    RiskData ||--|| RiskType : "categorizes"
+
+    RiskData ||--o{ ClaimData : "claims may arise from"
+    RiskData ||--o{ IncidentData : "incidents may be related"
+    RiskData ||--o{ MaintenanceTaskData : "tasks may mitigate"
+
+    IncidentData ||--o{ ClaimData : "can generate"
+    IncidentData ||--o{ MaintenanceTaskData : "can prompt"
+
+    SafetyCheckData ||--o{ RiskData : "discovers risks"
+
+    MaintenanceTaskData ||--o{ RiskData : "can mitigate/reduce"
+
+    ClaimData }o--|| Company : "claimant_company_id"
+    ClaimData }o--|| Company : "insurer_company_id"
 ```
+
+# NOT UPDATED YET
 
 ## Component Summary Table
 
